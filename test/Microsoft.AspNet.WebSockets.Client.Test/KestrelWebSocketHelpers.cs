@@ -48,7 +48,7 @@ namespace Microsoft.AspNet.WebSockets.Client.Test
 
             var engine = WebApplication.CreateHostingEngine(CallContextServiceLocator.Locator.ServiceProvider, config, configureServices: null)
                 .UseServer("Kestrel")
-                .UseStartup(startup, configureServices: null);
+                .UseStartup(startup);
 
             return engine.Start();
         }
