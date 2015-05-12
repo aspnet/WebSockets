@@ -1,0 +1,11 @@
+{
+  "locked": true,
+  "version": -9998,
+  "projectFileDependencyGroups": {
+    "": [
+      "Microsoft.AspNet.WebSockets.Protocol >= 1.0.0-beta4"
+    ],
+    ".NETFramework,Version=v4.5": []
+  },
+  "libraries": {}
+}

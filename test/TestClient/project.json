@@ -1,7 +1,7 @@
 {
     "dependencies": {
-        "Microsoft.AspNet.WebSockets.Protocol": "1.0.0-*",
-        "Microsoft.AspNet.WebSockets.Client": "1.0.0-*"
+        "Microsoft.AspNet.WebSockets.Protocol": "1.0.0-beta4",
+        "Microsoft.AspNet.WebSockets.Client": "1.0.0-beta4"
     },
     "frameworks": {
         "dnx451": { }

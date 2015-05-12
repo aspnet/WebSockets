@@ -1,0 +1,11 @@
+{
+  "locked": true,
+  "version": -9998,
+  "projectFileDependencyGroups": {
+    "": [
+      "Microsoft.AspNet.WebSockets.Client >= 1.0.0-beta4"
+    ],
+    "DNX,Version=v4.5.1": []
+  },
+  "libraries": {}
+}

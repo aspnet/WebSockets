@@ -1,23 +1,23 @@
 {
-    "version": "1.0.0-*",
+    "version": "1.0.0-beta4",
     "description": "Managed web socket protocol parser.",
     "frameworks": {
         "net45": { },
         "dnxcore50": {
             "dependencies": {
-                "Microsoft.Net.WebSocketAbstractions": "1.0.0-*",
-                "System.Diagnostics.Contracts": "4.0.0-beta-*",
-                "System.IO": "4.0.10-beta-*",
-                "System.Linq": "4.0.0-beta-*",
-                "System.Runtime": "4.0.20-beta-*",
-                "System.Runtime.InteropServices": "4.0.20-beta-*",
-                "System.Runtime.Extensions": "4.0.10-beta-*",
-                "System.Security.Cryptography.Encryption": "4.0.0-beta-*",
-                "System.Security.Cryptography.Hashing.Algorithms": "4.0.0-beta-*",
-                "System.Text.Encoding.Extensions": "4.0.10-beta-*",
-                "System.Threading": "4.0.10-beta-*",
-                "System.Threading.Tasks": "4.0.10-beta-*",
-                "System.Threading.Timer": "4.0.0-beta-*"
+                "Microsoft.Net.WebSocketAbstractions": "1.0.0-beta4",
+                "System.Diagnostics.Contracts": "4.0.0-beta-22816",
+                "System.IO": "4.0.10-beta-22816",
+                "System.Linq": "4.0.0-beta-22816",
+                "System.Runtime": "4.0.20-beta-22816",
+                "System.Runtime.InteropServices": "4.0.20-beta-22816",
+                "System.Runtime.Extensions": "4.0.10-beta-22816",
+                "System.Security.Cryptography.Encryption": "4.0.0-beta-22816",
+                "System.Security.Cryptography.Hashing.Algorithms": "4.0.0-beta-22816",
+                "System.Text.Encoding.Extensions": "4.0.10-beta-22816",
+                "System.Threading": "4.0.10-beta-22816",
+                "System.Threading.Tasks": "4.0.10-beta-22816",
+                "System.Threading.Timer": "4.0.0-beta-22816"
             }
         }
     }
