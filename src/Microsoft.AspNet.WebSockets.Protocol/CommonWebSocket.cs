@@ -592,11 +592,11 @@ namespace Microsoft.AspNet.WebSockets.Protocol
             }
             if (buffer.Offset < 0 || buffer.Offset > buffer.Array.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(buffer), buffer.Offset, string.Empty);
+                throw new ArgumentException($"The {nameof(buffer)}.{nameof(buffer.Offset)} property cannot be negative and cannot be greater than the size of the Array property's length.", nameof(buffer));
             }
             if (buffer.Count < 0 || buffer.Count > buffer.Array.Length - buffer.Offset)
             {
-                throw new ArgumentOutOfRangeException(nameof(buffer), buffer.Count, string.Empty);
+                throw new ArgumentException($"The {nameof(buffer)}.{nameof(buffer.Offset)} property cannot be negative and cannot be greater than the size of the Array property's length.", nameof(buffer));
             }
         }
 
