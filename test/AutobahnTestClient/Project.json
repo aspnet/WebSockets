@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "Microsoft.AspNet.WebSockets.Client": "1.0.0-*"
+        "Microsoft.AspNet.WebSockets.Client": "1.0.0-beta5"
     },
     "commands": { 
         "run" : "run"

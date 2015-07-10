@@ -1,0 +1,15 @@
+{
+  "locked": true,
+  "version": -9996,
+  "targets": {
+    "DNX,Version=v4.5.1": {}
+  },
+  "libraries": {},
+  "projectFileDependencyGroups": {
+    "": [
+      "Microsoft.AspNet.WebSockets.Protocol >= 1.0.0-beta5",
+      "Microsoft.AspNet.WebSockets.Client >= 1.0.0-beta5"
+    ],
+    "DNX,Version=v4.5.1": []
+  }
+}

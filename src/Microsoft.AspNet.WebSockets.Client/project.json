@@ -1,8 +1,8 @@
 {
-    "version": "1.0.0-*",
+    "version": "1.0.0-beta5",
     "description": "Client for communicating over web sockets.",
     "dependencies": {
-        "Microsoft.AspNet.WebSockets.Protocol": "1.0.0-*"
+        "Microsoft.AspNet.WebSockets.Protocol": "1.0.0-beta5"
     },
     "frameworks": {
         "net45": { }
