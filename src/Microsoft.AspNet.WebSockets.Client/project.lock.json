@@ -1,0 +1,45 @@
+{
+  "locked": true,
+  "version": 1,
+  "targets": {
+    ".NETFramework,Version=v4.5": {
+      "Microsoft.Framework.NotNullAttribute.Sources/1.0.0-beta6": {
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/Microsoft.Framework.NotNullAttribute.Sources.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Microsoft.Framework.NotNullAttribute.Sources.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Microsoft.Framework.NotNullAttribute.Sources/1.0.0-beta6": {
+      "sha512": "85K5j4jXSZxErwaNUrMMaq2O5sjPsW68fnCdSK8h88MZh04Bj0QAsk4yuRZG0nZlgn7He+k1H5XIWkMSLDXFKQ==",
+      "files": [
+        "lib/dnx451/Microsoft.Framework.NotNullAttribute.Sources.dll",
+        "lib/dnx451/Microsoft.Framework.NotNullAttribute.Sources.xml",
+        "lib/dotnet/Microsoft.Framework.NotNullAttribute.Sources.dll",
+        "lib/dotnet/Microsoft.Framework.NotNullAttribute.Sources.xml",
+        "lib/net45/Microsoft.Framework.NotNullAttribute.Sources.dll",
+        "lib/net45/Microsoft.Framework.NotNullAttribute.Sources.xml",
+        "Microsoft.Framework.NotNullAttribute.Sources.1.0.0-beta6.nupkg",
+        "Microsoft.Framework.NotNullAttribute.Sources.1.0.0-beta6.nupkg.sha512",
+        "Microsoft.Framework.NotNullAttribute.Sources.nuspec",
+        "shared/NotNullAttribute.cs"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "": [
+      "Microsoft.AspNet.WebSockets.Protocol >= 1.0.0-beta6"
+    ],
+    ".NETFramework,Version=v4.5": []
+  }
+}
