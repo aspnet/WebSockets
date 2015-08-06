@@ -5,7 +5,7 @@ using System;
 using System.Text;
 using Xunit;
 
-namespace Microsoft.AspNet.WebSockets.Protocol.Test
+namespace Microsoft.AspNet.WebSockets.Protocol.Tests
 {
     public class UtilitiesTests
     {

@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Framework.Internal;
 
-namespace Microsoft.AspNet.WebSockets.Protocol.Test
+namespace Microsoft.AspNet.WebSockets.Protocol.Tests
 {
     // This steam accepts writes from one side, buffers them internally, and returns the data via Reads
     // when requested on the other side.
