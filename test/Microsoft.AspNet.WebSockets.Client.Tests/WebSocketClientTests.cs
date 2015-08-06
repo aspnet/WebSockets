@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Microsoft.AspNet.WebSockets.Client.Test
+namespace Microsoft.AspNet.WebSockets.Client.Tests
 {
     public class WebSocketClientTests
     {

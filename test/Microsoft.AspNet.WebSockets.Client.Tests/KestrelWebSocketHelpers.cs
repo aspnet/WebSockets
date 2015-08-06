@@ -10,7 +10,7 @@ using Microsoft.Dnx.Runtime.Infrastructure;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.Configuration.Memory;
 
-namespace Microsoft.AspNet.WebSockets.Client.Test
+namespace Microsoft.AspNet.WebSockets.Client.Tests
 {
     public class KestrelWebSocketHelpers
     {
