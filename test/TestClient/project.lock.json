@@ -1,0 +1,68 @@
+{
+  "locked": true,
+  "version": 1,
+  "targets": {
+    "DNX,Version=v4.5.1": {
+      "Microsoft.AspNet.WebSockets.Client/1.0.0-beta7": {
+        "type": "project",
+        "dependencies": {
+          "Microsoft.AspNet.WebSockets.Protocol": "1.0.0-beta7"
+        }
+      },
+      "Microsoft.AspNet.WebSockets.Protocol/1.0.0-beta7": {
+        "type": "project",
+        "dependencies": {
+          "Microsoft.Framework.NotNullAttribute.Sources": "1.0.0-beta7"
+        }
+      },
+      "Microsoft.Framework.NotNullAttribute.Sources/1.0.0-beta7": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/dnx451/Microsoft.Framework.NotNullAttribute.Sources.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/Microsoft.Framework.NotNullAttribute.Sources.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Microsoft.AspNet.WebSockets.Client/1.0.0-beta7": {
+      "type": "project",
+      "path": "../../src/Microsoft.AspNet.WebSockets.Client/project.json"
+    },
+    "Microsoft.AspNet.WebSockets.Protocol/1.0.0-beta7": {
+      "type": "project",
+      "path": "../../src/Microsoft.AspNet.WebSockets.Protocol/project.json"
+    },
+    "Microsoft.Framework.NotNullAttribute.Sources/1.0.0-beta7": {
+      "type": "package",
+      "sha512": "kQEnnd9EfkktgUUYcMPqhUbK95PO3KWR0/CP+DxfYwpQZLursg9IjExfN5QU93dju1N92cXPhu/AagkQwHYSWA==",
+      "files": [
+        "lib/dnx451/Microsoft.Framework.NotNullAttribute.Sources.dll",
+        "lib/dnx451/Microsoft.Framework.NotNullAttribute.Sources.xml",
+        "lib/dotnet/Microsoft.Framework.NotNullAttribute.Sources.dll",
+        "lib/dotnet/Microsoft.Framework.NotNullAttribute.Sources.xml",
+        "lib/net45/Microsoft.Framework.NotNullAttribute.Sources.dll",
+        "lib/net45/Microsoft.Framework.NotNullAttribute.Sources.xml",
+        "Microsoft.Framework.NotNullAttribute.Sources.1.0.0-beta7.nupkg",
+        "Microsoft.Framework.NotNullAttribute.Sources.1.0.0-beta7.nupkg.sha512",
+        "Microsoft.Framework.NotNullAttribute.Sources.nuspec",
+        "shared/NotNullAttribute.cs"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "": [
+      "Microsoft.AspNet.WebSockets.Protocol >= 1.0.0-beta7",
+      "Microsoft.AspNet.WebSockets.Client >= 1.0.0-beta7"
+    ],
+    "DNX,Version=v4.5.1": []
+  }
+}

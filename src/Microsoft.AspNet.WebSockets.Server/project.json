@@ -1,19 +1,19 @@
 {
-    "version": "1.0.0-*",
+    "version": "1.0.0-beta7",
     "description": "ASP.NET 5 web socket middleware for use on top of opaque servers.",
     "repository": {
         "type": "git",
         "url": "git://github.com/aspnet/websockets"
     },
     "dependencies": {
-        "Microsoft.AspNet.Http": "1.0.0-*",
-        "Microsoft.AspNet.WebSockets.Protocol": "1.0.0-*"
+        "Microsoft.AspNet.Http": "1.0.0-beta7",
+        "Microsoft.AspNet.WebSockets.Protocol": "1.0.0-beta7"
     },
     "frameworks": {
-        "dnx451": { },
+        "dnx451": {},
         "dnxcore50": {
             "dependencies": {
-                "System.Runtime": "4.0.21-beta-*"
+                "System.Runtime": "4.0.21-beta-23225"
             }
         }
     }
