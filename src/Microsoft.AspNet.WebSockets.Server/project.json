@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-*",
+  "version": "1.0.0-rc1-final",
   "compilationOptions": {
     "warningsAsErrors": true,
     "keyFile": "../../tools/Key.snk"
@@ -10,14 +10,14 @@
     "url": "git://github.com/aspnet/websockets"
   },
   "dependencies": {
-    "Microsoft.AspNet.Http.Extensions": "1.0.0-*",
-    "Microsoft.AspNet.WebSockets.Protocol": "1.0.0-*"
+    "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
+    "Microsoft.AspNet.WebSockets.Protocol": "1.0.0-rc1-final"
   },
   "frameworks": {
     "net451": {},
     "dotnet5.4": {
       "dependencies": {
-        "System.Runtime": "4.0.21-beta-*"
+        "System.Runtime": "4.0.21-beta-23516"
       }
     }
   }

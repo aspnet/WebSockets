@@ -1,11 +1,11 @@
 {
-    "dependencies": {
-        "Microsoft.AspNet.WebSockets.Client": "1.0.0-*"
-    },
-    "commands": { 
-        "run" : "run"
-    },
-    "frameworks" : {
-        "dnx451" : { }
-    }
+  "dependencies": {
+    "Microsoft.AspNet.WebSockets.Client": "1.0.0-rc1-final"
+  },
+  "commands": {
+    "run": "run"
+  },
+  "frameworks": {
+    "dnx451": {}
+  }
 }
