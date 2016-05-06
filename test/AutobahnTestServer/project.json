@@ -1,12 +1,14 @@
 {
-  "exclude": "wwwroot/**/*",
   "dependencies": {
     "Microsoft.NETCore.Platforms": "1.0.1-*",
     "Microsoft.AspNetCore.WebSockets.Server": "0.1.0-*",
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-*"
   },
   "buildOptions": {
-    "emitEntryPoint": true
+    "emitEntryPoint": true,
+    "compile": {
+      "exclude": "wwwroot/**/*"
+    }
   },
   "frameworks": {
     "netcoreapp1.0": {
