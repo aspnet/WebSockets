@@ -3,7 +3,7 @@
     "emitEntryPoint": true
   },
   "dependencies": {
-    "Microsoft.AspNetCore.WebSockets.Client": "0.1.0-*"
+    "Microsoft.AspNetCore.WebSockets.Client": "0.1.0-rtm-21431"
   },
   "frameworks": {
     "net451": {}

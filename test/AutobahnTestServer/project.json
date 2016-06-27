@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "Microsoft.AspNetCore.WebSockets.Server": "0.1.0-*",
-    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0-*",
-    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0-*"
+    "Microsoft.AspNetCore.WebSockets.Server": "0.1.0",
+    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0"
   },
   "buildOptions": {
     "emitEntryPoint": true
@@ -11,11 +11,11 @@
     "netcoreapp1.0": {
       "dependencies": {
         "Microsoft.NETCore.App": {
-          "version": "1.0.0-*",
+          "version": "1.0.0",
           "type": "platform"
         },
-        "dotnet-test-xunit": "1.0.0-*",
-        "System.Diagnostics.Process": "4.1.0-*"
+        "dotnet-test-xunit": "1.0.0-rc3-000000-00",
+        "System.Diagnostics.Process": "4.1.0"
       },
       "imports": [
         "dnxcore50",
