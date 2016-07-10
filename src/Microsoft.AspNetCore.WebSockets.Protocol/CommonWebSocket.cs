@@ -131,22 +131,9 @@ namespace Microsoft.AspNetCore.WebSockets.Protocol
                 ThrowIfDisposed();
                 ThrowIfOutputClosed();
 
-                int mask = GetNextMask();
                 int opcode = _isOutgoingMessageInProgress ? Constants.OpCodes.ContinuationFrame : Utilities.GetOpCode(messageType);
-                FrameHeader frameHeader = new FrameHeader(endOfMessage, opcode, _maskOutput, mask, buffer.Count);
-                ArraySegment<byte> headerSegment = frameHeader.Buffer;
 
-                if (_maskOutput && mask != 0)
-                {
-                    // TODO: For larger messages consider using a limited size buffer and masking & sending in segments.
-                    byte[] maskedFrame = Utilities.MergeAndMask(mask, headerSegment, buffer);
-                    await _stream.WriteAsync(maskedFrame, 0, maskedFrame.Length, cancellationToken);
-                }
-                else
-                {
-                    await _stream.WriteAsync(headerSegment.Array, headerSegment.Offset, headerSegment.Count, cancellationToken);
-                    await _stream.WriteAsync(buffer.Array, buffer.Offset, buffer.Count, cancellationToken);
-                }
+                await SendFrameAsync(buffer.Array, buffer.Offset, buffer.Count, endOfMessage, opcode, cancellationToken);
 
                 _isOutgoingMessageInProgress = !endOfMessage;
             }
@@ -154,6 +141,34 @@ namespace Microsoft.AspNetCore.WebSockets.Protocol
             {
                 _writeLock.Release();
             }
+        }
+
+        private async Task SendFrameAsync(byte[] buffer, int bufferStart, int bufferCount, bool endOfMessage, int opCode, CancellationToken cancellationToken)
+        {
+            var headerSize = FrameHeader.CalculateFrameHeaderSize(_maskOutput, bufferCount);
+            var maskKey = (_maskOutput) ? GetNextMask() : 0;
+
+            if (_maskOutput && maskKey != 0)
+            {
+                var fullFrame = new byte[headerSize + bufferCount];
+
+                FrameHeader.Fill(fullFrame, endOfMessage, opCode, _maskOutput, maskKey, bufferCount);
+                Array.Copy(buffer, bufferStart, fullFrame, headerSize, bufferCount);
+
+                // TODO: For larger messages consider using a limited size buffer and masking & sending in segments.
+                Utilities.MaskInPlace(maskKey, fullFrame, headerSize, bufferCount);
+
+                await _stream.WriteAsync(fullFrame, 0, fullFrame.Length, cancellationToken);
+            }
+            else
+            {
+                var headerBuffer = new byte[headerSize];
+                FrameHeader.Fill(headerBuffer, endOfMessage, opCode, _maskOutput, maskKey, bufferCount);
+
+                await _stream.WriteAsync(headerBuffer, 0, headerBuffer.Length, cancellationToken);
+                await _stream.WriteAsync(buffer, bufferStart, bufferCount, cancellationToken);
+            }
+
         }
 
         private static void SendKeepAlive(object state)
@@ -178,21 +193,8 @@ namespace Microsoft.AspNetCore.WebSockets.Protocol
                     return;
                 }
 
-                int mask = GetNextMask();
-                FrameHeader frameHeader = new FrameHeader(true, Constants.OpCodes.PingFrame, _maskOutput, mask, PingBuffer.Length);
-                ArraySegment<byte> headerSegment = frameHeader.Buffer;
-
                 // TODO: CancelationToken / timeout?
-                if (_maskOutput && mask != 0)
-                {
-                    byte[] maskedFrame = Utilities.MergeAndMask(mask, headerSegment, new ArraySegment<byte>(PingBuffer));
-                    await _stream.WriteAsync(maskedFrame, 0, maskedFrame.Length);
-                }
-                else
-                {
-                    await _stream.WriteAsync(headerSegment.Array, headerSegment.Offset, headerSegment.Count);
-                    await _stream.WriteAsync(PingBuffer, 0, PingBuffer.Length);
-                }
+                await SendFrameAsync(PingBuffer, 0, PingBuffer.Length, true, Constants.OpCodes.PingFrame, CancellationToken.None);
             }
             catch (Exception)
             {
@@ -394,16 +396,7 @@ namespace Microsoft.AspNetCore.WebSockets.Protocol
                     Utilities.MaskInPlace(_frameInProgress.MaskKey, dataSegment);
                 }
 
-                int mask = GetNextMask();
-                FrameHeader header = new FrameHeader(true, Constants.OpCodes.PongFrame, _maskOutput, mask, _frameBytesRemaining);
-                if (_maskOutput)
-                {
-                    Utilities.MaskInPlace(mask, dataSegment);
-                }
-
-                ArraySegment<byte> headerSegment = header.Buffer;
-                await _stream.WriteAsync(headerSegment.Array, headerSegment.Offset, headerSegment.Count, cancellationToken);
-                await _stream.WriteAsync(dataSegment.Array, dataSegment.Offset, dataSegment.Count, cancellationToken);
+                await SendFrameAsync(dataSegment.Array, dataSegment.Offset, dataSegment.Count, true, Constants.OpCodes.PongFrame, cancellationToken);
             }
             finally
             {
@@ -506,17 +499,7 @@ namespace Microsoft.AspNetCore.WebSockets.Protocol
                 fullData[1] = (byte)closeStatus;
                 Array.Copy(descriptionBytes, 0, fullData, 2, descriptionBytes.Length);
 
-                int mask = GetNextMask();
-                if (_maskOutput)
-                {
-                    Utilities.MaskInPlace(mask, new ArraySegment<byte>(fullData));
-                }
-
-                FrameHeader frameHeader = new FrameHeader(true, Constants.OpCodes.CloseFrame, _maskOutput, mask, fullData.Length);
-
-                ArraySegment<byte> segment = frameHeader.Buffer;
-                await _stream.WriteAsync(segment.Array, segment.Offset, segment.Count, cancellationToken);
-                await _stream.WriteAsync(fullData, 0, fullData.Length, cancellationToken);
+                await SendFrameAsync(fullData, 0, fullData.Length, true, Constants.OpCodes.CloseFrame, cancellationToken);
 
                 if (State == WebSocketState.Open)
                 {

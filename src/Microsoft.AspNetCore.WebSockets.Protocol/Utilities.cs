@@ -25,25 +25,28 @@ namespace Microsoft.AspNetCore.WebSockets.Protocol
             MaskInPlace(mask, ref maskOffset, data);
         }
 
+        public static void MaskInPlace(int mask, byte[] data, int dataStart, int dataCount)
+        {
+            int maskOffset = 0;
+            MaskInPlace(mask, ref maskOffset, data, dataStart, dataCount);
+        }
+
         public static void MaskInPlace(int mask, ref int maskOffset, ArraySegment<byte> data)
+        {
+            MaskInPlace(mask, ref maskOffset, data.Array, data.Offset, data.Count);
+        }
+
+        public static void MaskInPlace(int mask, ref int maskOffset, byte[] data, int dataStart, int dataCount)
         {
             if (mask == 0)
             {
                 return;
             }
 
-            byte[] maskBytes = new byte[]
+            int end = dataStart + dataCount;
+            for (int i = dataStart; i < end; i++)
             {
-                (byte)(mask >> 24),
-                (byte)(mask >> 16),
-                (byte)(mask >> 8),
-                (byte)mask,
-            };
-
-            int end = data.Offset + data.Count;
-            for (int i = data.Offset; i < end; i++)
-            {
-                data.Array[i] ^= maskBytes[maskOffset];
+                data[i] ^= (byte)(mask >> (24 - maskOffset * 8));
                 maskOffset = (maskOffset + 1) & 0x3; // fast % 4;
             }
         }
