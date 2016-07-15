@@ -22,23 +22,7 @@ namespace Microsoft.AspNetCore.WebSockets.Protocol
 
         public FrameHeader(bool final, int opCode, bool masked, int maskKey, long dataLength)
         {
-            int headerLength = 2;
-            if (masked)
-            {
-                headerLength += 4;
-            }
-
-            if (dataLength <= 125)
-            {
-            }
-            else if (125 < dataLength && dataLength <= 0xFFFF)
-            {
-                headerLength += 2;
-            }
-            else
-            {
-                headerLength += 8;
-            }
+            int headerLength = CalculateFrameHeaderSize(masked, dataLength);
             _header = new byte[headerLength];
 
             Fin = final;
@@ -247,6 +231,96 @@ namespace Microsoft.AspNetCore.WebSockets.Protocol
                 headerLength += 8;
             }
             return headerLength;
+        }
+
+        public static int CalculateFrameHeaderSize(bool masked, long dataLength)
+        {
+            int headerLength = 2;
+            if (masked)
+            {
+                headerLength += 4;
+            }
+
+            if (dataLength <= 125)
+            {
+            }
+            else if (125 < dataLength && dataLength <= 0xFFFF)
+            {
+                headerLength += 2;
+            }
+            else
+            {
+                headerLength += 8;
+            }
+
+            return headerLength;
+        }
+
+        public static void Fill(byte[] buffer, bool final, int opCode, bool masked, int maskKey, long dataLength)
+        {
+            // Final
+            if (final)
+            {
+                buffer[0] |= 0x80;
+            }
+            else
+            {
+                buffer[0] &= 0x7F;
+            }
+
+            // OpCode
+            buffer[0] |= (byte)(opCode & 0xF);
+
+            // Masked
+            if (masked)
+            {
+                buffer[1] |= 0x80;
+            }
+            else
+            {
+                buffer[1] &= 0x7F;
+            }
+
+            int maskOffset = 2;
+
+            // Length
+            if (dataLength <= 125)
+            {
+                buffer[1] |= (byte)(dataLength & 0x7F);
+            }
+            else if (125 < dataLength && dataLength <= 0xFFFF)
+            {
+                buffer[1] |= (byte)(0x7E & 0x7F);
+
+                buffer[2] = (byte)(dataLength >> 8);
+                buffer[3] = (byte)dataLength;
+
+                maskOffset += 2;
+            }
+            else
+            {
+                buffer[1] |= (byte)(0x7F & 0x7F);
+
+                buffer[2] = (byte)(dataLength >> 56);
+                buffer[3] = (byte)(dataLength >> 48);
+                buffer[4] = (byte)(dataLength >> 40);
+                buffer[5] = (byte)(dataLength >> 32);
+                buffer[6] = (byte)(dataLength >> 24);
+                buffer[7] = (byte)(dataLength >> 16);
+                buffer[8] = (byte)(dataLength >> 8);
+                buffer[9] = (byte)dataLength;
+
+                maskOffset += 8;
+            }
+
+            // Do masking
+            if (masked)
+            {
+                buffer[maskOffset] = (byte)(maskKey >> 24);
+                buffer[maskOffset + 1] = (byte)(maskKey >> 16);
+                buffer[maskOffset + 2] = (byte)(maskKey >> 8);
+                buffer[maskOffset + 3] = (byte)maskKey;
+            }
         }
     }
 }
