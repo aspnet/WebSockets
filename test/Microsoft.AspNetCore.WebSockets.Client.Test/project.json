@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "dotnet-test-xunit": "1.0.0-rc3-000000-00",
+    "dotnet-test-xunit": "1.0.0-rc3-000000-01",
     "Microsoft.AspNetCore.WebSockets.Client": "0.1.0-rtm-21431",
     "Microsoft.AspNetCore.WebSockets.Server": "0.1.0",
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",

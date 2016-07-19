@@ -14,7 +14,7 @@
           "version": "1.0.0",
           "type": "platform"
         },
-        "dotnet-test-xunit": "1.0.0-rc3-000000-00",
+        "dotnet-test-xunit": "1.0.0-rc3-000000-01",
         "System.Diagnostics.Process": "4.1.0"
       },
       "imports": [
