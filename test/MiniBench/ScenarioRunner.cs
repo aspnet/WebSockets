@@ -35,14 +35,20 @@ namespace MiniBench
 
                     for (var i = 0; i < benchmarkOptions.TestRuns; i++)
                     {
-                        results.Add(await scenario.Run(output, benchmarkOptions, cancellationToken));
+                        var result = await scenario.Run(output, benchmarkOptions, cancellationToken);
+                        results.Add(result);
+                        if (!reportingOptions.Quiet)
+                        {
+                            Console.WriteLine($"{result.MessagesSent} sent in {result.ActualDuration.TotalSeconds:0.00} seconds, {result.MessagesPerSecond:0.00} messages/second");
+                        }
                     }
 
-                    foreach (var result in results)
-                    {
-                        await Report(result, reportingOptions);
-                    }
+                    await Report(results, reportingOptions);
                     return 0;
+                }
+                catch (OperationCanceledException)
+                {
+                    return 1;
                 }
                 catch (Exception ex)
                 {
@@ -52,13 +58,8 @@ namespace MiniBench
             }
         }
 
-        private static async Task Report(ScenarioResult results, ReportingOptions reportingOptions)
+        private static async Task Report(IEnumerable<ScenarioResult> results, ReportingOptions reportingOptions)
         {
-            if (!reportingOptions.Quiet)
-            {
-                Console.WriteLine($"{results.MessagesSent} sent in {results.ActualDuration.TotalSeconds:0.00} seconds, {results.MessagesPerSecond:0.00} messages/second");
-            }
-
             if (!string.IsNullOrEmpty(reportingOptions.Append))
             {
                 Console.WriteLine("Appending results to: " + reportingOptions.Append);
@@ -66,12 +67,12 @@ namespace MiniBench
             }
             else if(!string.IsNullOrEmpty(reportingOptions.Output))
             {
-                Console.WriteLine("Writing results to: " + reportingOptions.Append);
+                Console.WriteLine("Writing results to: " + reportingOptions.Output);
                 await Write(results, FileMode.Create, reportingOptions.Output);
             }
         }
 
-        private static async Task Write(ScenarioResult results, FileMode mode, string path)
+        private static async Task Write(IEnumerable<ScenarioResult> results, FileMode mode, string path)
         {
             using (var stream = new FileStream(path, mode, FileAccess.Write, FileShare.None))
             using (var writer = new StreamWriter(stream))
@@ -88,14 +89,17 @@ namespace MiniBench
                         "MessagesSent," +
                         "MessagesPerSecond");
                 }
-                await writer.WriteLineAsync(
-                    results.Scenario + "," +
-                    results.PipelineDepth + "," +
-                    results.StartTimeUtc.ToString("O") + "," +
-                    results.IntendedDuration.TotalMilliseconds.ToString() + "," +
-                    results.ActualDuration.TotalMilliseconds.ToString() + "," +
-                    results.MessagesSent.ToString() + "," +
-                    results.MessagesPerSecond.ToString());
+                foreach (var result in results)
+                {
+                    await writer.WriteLineAsync(
+                        result.Scenario + "," +
+                        result.PipelineDepth + "," +
+                        result.StartTimeUtc.ToString("O") + "," +
+                        result.IntendedDuration.TotalMilliseconds.ToString() + "," +
+                        result.ActualDuration.TotalMilliseconds.ToString() + "," +
+                        result.MessagesSent.ToString() + "," +
+                        result.MessagesPerSecond.ToString());
+                }
             }
         }
     }

@@ -48,7 +48,7 @@ namespace MiniBench
                 });
             });
 
-            return Task.CompletedTask;
+            return Task.FromResult(0);
         }
 
         public override async Task<ScenarioResult> Run(TextWriter output, BenchmarkOptions benchmarkOptions, CancellationToken cancellationToken)
@@ -65,7 +65,7 @@ namespace MiniBench
 
             // Do the warm-up
             output.WriteLine("C: Beginning Warmup");
-            for(var i = 0; i < benchmarkOptions.WarmupIterations; i++)
+            for (var i = 0; i < benchmarkOptions.WarmupIterations; i++)
             {
                 // Don't care about the results for this.
                 await PerformIteration(clientSocket, benchmarkOptions.PipelineDepth, payload, cancellationToken);
@@ -97,7 +97,7 @@ namespace MiniBench
         private static async Task<int> PerformIteration(ClientWebSocket clientSocket, int pipelineDepth, byte[] payloadBase, CancellationToken cancellationToken)
         {
             var status = new bool[pipelineDepth];
-            for(var i = 0; i < pipelineDepth; i++)
+            for (var i = 0; i < pipelineDepth; i++)
             {
                 status[i] = false;
                 payloadBase[0] = (byte)i;
@@ -106,19 +106,19 @@ namespace MiniBench
 
             // Now wait for the responses
             var buf = new byte[270]; // Just allocate a little more to be safe...
-            while(status.Any(b => !b))
+            while (status.Any(b => !b))
             {
-                var resp = await clientSocket.ReceiveAsync(new ArraySegment<byte>(buf), cancellationToken);
-                if(resp.CloseStatus.HasValue)
+                var resp = await ReceiveWholeMessageAsync(clientSocket, buf, cancellationToken);
+                if (resp.CloseStatus.HasValue)
                 {
                     throw new OperationCanceledException("Server closed socket!");
                 }
-                if(resp.Count != 256)
+                if (resp.Count != payloadBase.Length)
                 {
-                    throw new InvalidOperationException("Incomplete payload!");
+                    throw new InvalidOperationException($"Incomplete payload! Expected {payloadBase.Length} bytes but got {resp.Count}");
                 }
                 var msg = buf[0];
-                if(msg > pipelineDepth)
+                if (msg > pipelineDepth)
                 {
                     throw new InvalidOperationException("Ack for unsent message??");
                 }
@@ -126,6 +126,23 @@ namespace MiniBench
             }
 
             return pipelineDepth;
+        }
+
+        private static async Task<WebSocketReceiveResult> ReceiveWholeMessageAsync(WebSocket clientSocket, byte[] buf, CancellationToken cancellationToken)
+        {
+            var offset = 0;
+            var received = 0;
+            WebSocketReceiveResult resp;
+            do
+            {
+                resp = await clientSocket.ReceiveAsync(new ArraySegment<byte>(buf, offset, buf.Length - offset), cancellationToken);
+
+                offset += resp.Count;
+                received += resp.Count;
+            } while (!resp.CloseStatus.HasValue && !resp.EndOfMessage);
+
+            return new WebSocketReceiveResult(received, resp.MessageType, resp.EndOfMessage, resp.CloseStatus, resp.CloseStatusDescription);
+
         }
 
         public override void Dispose()
