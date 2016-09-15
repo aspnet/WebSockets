@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "Microsoft.AspNetCore.Hosting": "1.1.0-*",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.1.0-*",
+    "Microsoft.AspNetCore.WebSockets": "0.2.0-*",
+    "Microsoft.Extensions.CommandLineUtils": "1.1.0-*",
+    "Microsoft.Extensions.Logging.Abstractions": "1.1.0-*"
+  },
+
+  "frameworks": {
+    "net46": {}
+  }
+}
