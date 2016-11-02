@@ -78,7 +78,7 @@ namespace Microsoft.AspNetCore.WebSockets.ConformanceTest
                 //await tester.DeployTestAndAddToSpec(ServerType.WebListener, ssl: false, environment: "NativeSockets");
 
                 result = await tester.Run(cts.Token);
-                tester.Verify(result, cts.Token);
+                tester.Verify(result);
             }
 
             // If it hasn't been cancelled yet, cancel the token just to be sure

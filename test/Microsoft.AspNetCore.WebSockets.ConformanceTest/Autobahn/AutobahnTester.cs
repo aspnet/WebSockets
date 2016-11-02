@@ -67,12 +67,11 @@ namespace Microsoft.AspNetCore.WebSockets.ConformanceTest.Autobahn
             }
         }
 
-        public void Verify(AutobahnResult result, CancellationToken cancellationToken)
+        public void Verify(AutobahnResult result)
         {
             var failures = new StringBuilder();
             foreach (var serverResult in result.Servers)
             {
-                cancellationToken.ThrowIfCancellationRequested();
                 var serverExpectation = _expectations.FirstOrDefault(e => e.Server == serverResult.Server && e.Ssl == serverResult.Ssl);
                 if (serverExpectation == null)
                 {
