@@ -66,9 +66,9 @@ namespace Microsoft.AspNetCore.WebSockets.ConformanceTest.Autobahn
                             }
                             break;
                         case Expectation.OkOrFail:
-                            if (!caseResult.BehaviorIs("FAILED") && !caseResult.BehaviorIs("OK"))
+                            if (!caseResult.BehaviorIs("NON-STRICT") && !caseResult.BehaviorIs("FAILED") && !caseResult.BehaviorIs("OK"))
                             {
-                                failures.AppendLine($"Case {serverResult.Name}:{caseResult.Name}. Expected 'FAILED' or 'OK', but got '{caseResult.ActualBehavior}'");
+                                failures.AppendLine($"Case {serverResult.Name}:{caseResult.Name}. Expected 'FAILED', 'NON-STRICT' or 'OK', but got '{caseResult.ActualBehavior}'");
                             }
                             break;
                         default:
