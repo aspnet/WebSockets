@@ -65,7 +65,7 @@ namespace Microsoft.AspNetCore.WebSockets.ConformanceTest.Autobahn
 
         private void LogIfNotNull(Action<string, object[]> logger, string message, string data)
         {
-            if(!string.IsNullOrEmpty(data))
+            if (!string.IsNullOrEmpty(data))
             {
                 logger(message, new[] { data });
             }
