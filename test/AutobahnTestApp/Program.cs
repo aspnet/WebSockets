@@ -20,7 +20,7 @@ namespace AutobahnTestApp
             var logger = loggerFactory.CreateLogger<Program>();
 
             var builder = new WebHostBuilder()
-                .UseLoggerFactory(loggerFactory)
+                .UseLoggerFactory(_ => loggerFactory)
                 .UseConfiguration(config)
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
