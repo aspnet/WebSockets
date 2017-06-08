@@ -24,7 +24,7 @@ namespace AutobahnTestApp
                     logger.LogInformation("Received WebSocket request");
                     using (var webSocket = await context.WebSockets.AcceptWebSocketAsync())
                     {
-                        await Echo(webSocket);
+                        await Echo(webSocket, context.RequestAborted);
                     }
                 }
                 else
