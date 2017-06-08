@@ -15,7 +15,7 @@ namespace Microsoft.AspNetCore.WebSockets.ConformanceTest
 {
     public class AutobahnTests : LoggedTest
     {
-        private static readonly TimeSpan TestTimeout = TimeSpan.FromMinutes(10);
+        private static readonly TimeSpan TestTimeout = TimeSpan.FromMinutes(3);
 
         public AutobahnTests(ITestOutputHelper output) : base(output)
         {
@@ -50,7 +50,7 @@ namespace Microsoft.AspNetCore.WebSockets.ConformanceTest
                 var cts = new CancellationTokenSource();
                 cts.CancelAfter(TestTimeout); // These tests generally complete in just over 1 minute.
 
-                using (cts.Token.Register(() => logger.LogError("Test run is taking longer than expected duration of {timeoutMinutes:0.00} minutes. Aborting...", TestTimeout.TotalMinutes)))
+                using (cts.Token.Register(() => logger.LogError("Test run is taking longer than maximum duration of {timeoutMinutes:0.00} minutes. Aborting...", TestTimeout.TotalMinutes)))
                 {
                     AutobahnResult result;
                     using (var tester = new AutobahnTester(loggerFactory, spec))
