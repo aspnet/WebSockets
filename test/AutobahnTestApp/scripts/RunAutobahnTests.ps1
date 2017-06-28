@@ -23,7 +23,7 @@ Write-Host "Launching Autobahn Test Suite ($Iterations iteration(s))..."
 
     $SpecJson = [IO.File]::ReadAllText($Spec).Replace("OUTPUTDIR", $OutputDir.Replace("\", "\\")).Replace("WEBSOCKETURL", $ServerUrl).Replace("`"CASES`"", $CasesArray)
 
-    $TempFile = [IO.Path]::GetTempFileName()
+    $TempFile = [IO.Path]::Combine([IO.Path]::GetTempPath(), [IO.Path]::GetRandomFileName())
 
     try {
         [IO.File]::WriteAllText($TempFile, $SpecJson)
