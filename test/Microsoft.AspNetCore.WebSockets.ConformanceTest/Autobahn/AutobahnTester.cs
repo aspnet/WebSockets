@@ -33,7 +33,7 @@ namespace Microsoft.AspNetCore.WebSockets.ConformanceTest.Autobahn
 
         public async Task<AutobahnResult> Run(CancellationToken cancellationToken)
         {
-            var specFile = Path.GetTempFileName();
+            var specFile = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             try
             {
                 // Start pinging the servers to see that they're still running
