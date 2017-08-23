@@ -19,7 +19,7 @@ namespace System.Net.WebSockets
         internal static readonly string net_WebSockets_InvalidEmptySubProtocol = Strings.net_WebSockets_InvalidEmptySubProtocol;
         internal static readonly string net_WebSockets_InvalidState = Strings.net_WebSockets_InvalidState;
         internal static readonly string net_WebSockets_InvalidState_ClosedOrAborted = Strings.net_WebSockets_InvalidState_ClosedOrAborted;
-        internal static readonly string net_WebSockets_ReasonNotNull = Strings.net_Websockets_AlreadyOneOutstandingOperation;
+        internal static readonly string net_WebSockets_ReasonNotNull = Strings.net_WebSockets_ReasonNotNull;
         internal static readonly string net_WebSockets_UnsupportedPlatform = Strings.net_WebSockets_UnsupportedPlatform;
 
         internal static string Format(string name, params object[] args)
