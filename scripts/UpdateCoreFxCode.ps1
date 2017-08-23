@@ -8,7 +8,7 @@ $FilesToCopy = @(
 )
 
 if(!$CoreFxRepoRoot) {
-    $CoreFxRepoRoot = "$RepoRoot\..\..\dotnet\corefx"
+    $CoreFxRepoRoot = "$RepoRoot\..\corefx"
 }
 
 if(!(Test-Path $CoreFxRepoRoot)) {
