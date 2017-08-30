@@ -5,6 +5,7 @@ $RepoRoot = Split-Path -Parent $PSScriptRoot
 $FilesToCopy = @(
     "src\Common\src\System\Net\WebSockets\ManagedWebSocket.cs",
     "src\Common\src\System\Net\WebSockets\WebSocketValidate.cs"
+    "src\System.Net.WebSockets.Client\src\Resources\Strings.resx"
 )
 
 if(!$CoreFxRepoRoot) {
