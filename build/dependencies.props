@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AspNetCoreVersion>2.0.0</AspNetCoreVersion>
     <AspNetCoreIntegrationTestingVersion>0.4.0</AspNetCoreIntegrationTestingVersion>
-    <AspNetCoreModuleVersion>1.0.0</AspNetCoreModuleVersion>
+    <AspNetCoreModuleVersion>1.0.0-pre-10057</AspNetCoreModuleVersion>
     <CoreFxVersion>4.4.0</CoreFxVersion>
     <InternalAspNetCoreSdkVersion>2.0.1-rtm-15400</InternalAspNetCoreSdkVersion>
     <NETStandardImplicitPackageVersion>2.0.0</NETStandardImplicitPackageVersion>
