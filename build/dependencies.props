@@ -1,15 +1,15 @@
 ﻿<Project>
   <PropertyGroup>
-    <InternalAspNetCoreSdkPackageVersion>2.0.2-beta-15522</InternalAspNetCoreSdkPackageVersion>
+    <InternalAspNetCoreSdkPackageVersion>2.0.2-rc1-15526</InternalAspNetCoreSdkPackageVersion>
     <MicrosoftAspNetCoreAspNetCoreModulePackageVersion>1.0.0-pre-10057</MicrosoftAspNetCoreAspNetCoreModulePackageVersion>
-    <MicrosoftAspNetCoreDiagnosticsPackageVersion>2.0.1-rtm-83</MicrosoftAspNetCoreDiagnosticsPackageVersion>
-    <MicrosoftAspNetCoreHttpExtensionsPackageVersion>2.0.1-rtm-83</MicrosoftAspNetCoreHttpExtensionsPackageVersion>
-    <MicrosoftAspNetCoreServerHttpSysPackageVersion>2.0.1-rtm-83</MicrosoftAspNetCoreServerHttpSysPackageVersion>
-    <MicrosoftAspNetCoreServerIISIntegrationPackageVersion>2.0.1-rtm-83</MicrosoftAspNetCoreServerIISIntegrationPackageVersion>
-    <MicrosoftAspNetCoreServerIntegrationTestingPackageVersion>0.4.1-rtm-83</MicrosoftAspNetCoreServerIntegrationTestingPackageVersion>
-    <MicrosoftAspNetCoreServerKestrelHttpsPackageVersion>2.0.1-rtm-83</MicrosoftAspNetCoreServerKestrelHttpsPackageVersion>
-    <MicrosoftAspNetCoreServerKestrelPackageVersion>2.0.1-rtm-83</MicrosoftAspNetCoreServerKestrelPackageVersion>
-    <MicrosoftAspNetCoreStaticFilesPackageVersion>2.0.1-rtm-83</MicrosoftAspNetCoreStaticFilesPackageVersion>
+    <MicrosoftAspNetCoreDiagnosticsPackageVersion>2.0.1-rtm-105</MicrosoftAspNetCoreDiagnosticsPackageVersion>
+    <MicrosoftAspNetCoreHttpExtensionsPackageVersion>2.0.1-rtm-105</MicrosoftAspNetCoreHttpExtensionsPackageVersion>
+    <MicrosoftAspNetCoreServerHttpSysPackageVersion>2.0.1-rtm-105</MicrosoftAspNetCoreServerHttpSysPackageVersion>
+    <MicrosoftAspNetCoreServerIISIntegrationPackageVersion>2.0.1-rtm-105</MicrosoftAspNetCoreServerIISIntegrationPackageVersion>
+    <MicrosoftAspNetCoreServerIntegrationTestingPackageVersion>0.4.1-rtm-105</MicrosoftAspNetCoreServerIntegrationTestingPackageVersion>
+    <MicrosoftAspNetCoreServerKestrelHttpsPackageVersion>2.0.1-rtm-105</MicrosoftAspNetCoreServerKestrelHttpsPackageVersion>
+    <MicrosoftAspNetCoreServerKestrelPackageVersion>2.0.1-rtm-105</MicrosoftAspNetCoreServerKestrelPackageVersion>
+    <MicrosoftAspNetCoreStaticFilesPackageVersion>2.0.1-rtm-105</MicrosoftAspNetCoreStaticFilesPackageVersion>
     <MicrosoftAspNetCoreTestingPackageVersion>2.0.0</MicrosoftAspNetCoreTestingPackageVersion>
     <MicrosoftExtensionsConfigurationCommandLinePackageVersion>2.0.0</MicrosoftExtensionsConfigurationCommandLinePackageVersion>
     <MicrosoftExtensionsLoggingConsolePackageVersion>2.0.0</MicrosoftExtensionsLoggingConsolePackageVersion>
