@@ -16,8 +16,6 @@ namespace Microsoft.AspNetCore.WebSockets.Test
         private static string ClientAddress = "ws://localhost:54321/";
 
         [ConditionalFact]
-        [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-        [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
         [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
         public async Task Connect_Success()
         {
@@ -35,8 +33,6 @@ namespace Microsoft.AspNetCore.WebSockets.Test
         }
 
         [ConditionalFact]
-        [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-        [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
         [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
         public async Task NegotiateSubProtocol_Success()
         {
@@ -59,8 +55,6 @@ namespace Microsoft.AspNetCore.WebSockets.Test
         }
 
         [ConditionalFact]
-        [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-        [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
         [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
         public async Task SendEmptyData_Success()
         {
@@ -86,8 +80,6 @@ namespace Microsoft.AspNetCore.WebSockets.Test
         }
 
         [ConditionalFact]
-        [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-        [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
         [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
         public async Task SendShortData_Success()
         {
@@ -114,8 +106,6 @@ namespace Microsoft.AspNetCore.WebSockets.Test
         }
 
         [ConditionalFact]
-        [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-        [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
         [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
         public async Task SendMediumData_Success()
         {
@@ -142,8 +132,6 @@ namespace Microsoft.AspNetCore.WebSockets.Test
         }
 
         [ConditionalFact]
-        [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-        [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
         [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
         public async Task SendLongData_Success()
         {
@@ -182,8 +170,6 @@ namespace Microsoft.AspNetCore.WebSockets.Test
         }
 
         [ConditionalFact]
-        [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-        [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
         [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
         public async Task SendFragmentedData_Success()
         {
@@ -228,8 +214,6 @@ namespace Microsoft.AspNetCore.WebSockets.Test
         }
 
         [ConditionalFact]
-        [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-        [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
         [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
         public async Task ReceiveShortData_Success()
         {
@@ -256,8 +240,6 @@ namespace Microsoft.AspNetCore.WebSockets.Test
         }
 
         [ConditionalFact]
-        [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-        [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
         [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
         public async Task ReceiveMediumData_Success()
         {
@@ -284,8 +266,6 @@ namespace Microsoft.AspNetCore.WebSockets.Test
         }
 
         [ConditionalFact]
-        [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-        [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
         [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
         public async Task ReceiveLongData()
         {
@@ -319,223 +299,211 @@ namespace Microsoft.AspNetCore.WebSockets.Test
             }
         }
 
-    [ConditionalFact]
-    [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-    [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
-    [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
-    public async Task ReceiveFragmentedData_Success()
-    {
-        var orriginalData = Encoding.UTF8.GetBytes("Hello World");
-        using (var server = KestrelWebSocketHelpers.CreateServer(async context =>
+        [ConditionalFact]
+        [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
+        public async Task ReceiveFragmentedData_Success()
         {
-            Assert.True(context.WebSockets.IsWebSocketRequest);
-            var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-
-            await webSocket.SendAsync(new ArraySegment<byte>(orriginalData, 0, 2), WebSocketMessageType.Binary, false, CancellationToken.None);
-            await webSocket.SendAsync(new ArraySegment<byte>(orriginalData, 2, 2), WebSocketMessageType.Binary, false, CancellationToken.None);
-            await webSocket.SendAsync(new ArraySegment<byte>(orriginalData, 4, 7), WebSocketMessageType.Binary, true, CancellationToken.None);
-        }))
-        {
-            using (var client = new ClientWebSocket())
+            var orriginalData = Encoding.UTF8.GetBytes("Hello World");
+            using (var server = KestrelWebSocketHelpers.CreateServer(async context =>
             {
-                await client.ConnectAsync(new Uri(ClientAddress), CancellationToken.None);
-                var clientBuffer = new byte[orriginalData.Length];
-                var result = await client.ReceiveAsync(new ArraySegment<byte>(clientBuffer), CancellationToken.None);
-                Assert.False(result.EndOfMessage);
-                Assert.Equal(2, result.Count);
-                int totalReceived = result.Count;
-                Assert.Equal(WebSocketMessageType.Binary, result.MessageType);
+                Assert.True(context.WebSockets.IsWebSocketRequest);
+                var webSocket = await context.WebSockets.AcceptWebSocketAsync();
 
-                result = await client.ReceiveAsync(
-                    new ArraySegment<byte>(clientBuffer, totalReceived, clientBuffer.Length - totalReceived), CancellationToken.None);
-                Assert.False(result.EndOfMessage);
-                Assert.Equal(2, result.Count);
-                totalReceived += result.Count;
-                Assert.Equal(WebSocketMessageType.Binary, result.MessageType);
+                await webSocket.SendAsync(new ArraySegment<byte>(orriginalData, 0, 2), WebSocketMessageType.Binary, false, CancellationToken.None);
+                await webSocket.SendAsync(new ArraySegment<byte>(orriginalData, 2, 2), WebSocketMessageType.Binary, false, CancellationToken.None);
+                await webSocket.SendAsync(new ArraySegment<byte>(orriginalData, 4, 7), WebSocketMessageType.Binary, true, CancellationToken.None);
+            }))
+            {
+                using (var client = new ClientWebSocket())
+                {
+                    await client.ConnectAsync(new Uri(ClientAddress), CancellationToken.None);
+                    var clientBuffer = new byte[orriginalData.Length];
+                    var result = await client.ReceiveAsync(new ArraySegment<byte>(clientBuffer), CancellationToken.None);
+                    Assert.False(result.EndOfMessage);
+                    Assert.Equal(2, result.Count);
+                    int totalReceived = result.Count;
+                    Assert.Equal(WebSocketMessageType.Binary, result.MessageType);
 
-                result = await client.ReceiveAsync(
-                    new ArraySegment<byte>(clientBuffer, totalReceived, clientBuffer.Length - totalReceived), CancellationToken.None);
+                    result = await client.ReceiveAsync(
+                        new ArraySegment<byte>(clientBuffer, totalReceived, clientBuffer.Length - totalReceived), CancellationToken.None);
+                    Assert.False(result.EndOfMessage);
+                    Assert.Equal(2, result.Count);
+                    totalReceived += result.Count;
+                    Assert.Equal(WebSocketMessageType.Binary, result.MessageType);
+
+                    result = await client.ReceiveAsync(
+                        new ArraySegment<byte>(clientBuffer, totalReceived, clientBuffer.Length - totalReceived), CancellationToken.None);
+                    Assert.True(result.EndOfMessage);
+                    Assert.Equal(7, result.Count);
+                    totalReceived += result.Count;
+                    Assert.Equal(WebSocketMessageType.Binary, result.MessageType);
+
+                    Assert.Equal(orriginalData, clientBuffer);
+                }
+            }
+        }
+
+        [ConditionalFact]
+        [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
+        public async Task SendClose_Success()
+        {
+            string closeDescription = "Test Closed";
+            using (var server = KestrelWebSocketHelpers.CreateServer(async context =>
+            {
+                Assert.True(context.WebSockets.IsWebSocketRequest);
+                var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+
+                var serverBuffer = new byte[1024];
+                var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(serverBuffer), CancellationToken.None);
                 Assert.True(result.EndOfMessage);
-                Assert.Equal(7, result.Count);
-                totalReceived += result.Count;
-                Assert.Equal(WebSocketMessageType.Binary, result.MessageType);
+                Assert.Equal(0, result.Count);
+                Assert.Equal(WebSocketMessageType.Close, result.MessageType);
+                Assert.Equal(WebSocketCloseStatus.NormalClosure, result.CloseStatus);
+                Assert.Equal(closeDescription, result.CloseStatusDescription);
+            }))
+            {
+                using (var client = new ClientWebSocket())
+                {
+                    await client.ConnectAsync(new Uri(ClientAddress), CancellationToken.None);
+                    await client.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, closeDescription, CancellationToken.None);
 
-                Assert.Equal(orriginalData, clientBuffer);
+                    Assert.Equal(WebSocketState.CloseSent, client.State);
+                }
             }
         }
-    }
 
-    [ConditionalFact]
-    [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-    [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
-    [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
-    public async Task SendClose_Success()
-    {
-        string closeDescription = "Test Closed";
-        using (var server = KestrelWebSocketHelpers.CreateServer(async context =>
+        [ConditionalFact]
+        [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
+        public async Task ReceiveClose_Success()
         {
-            Assert.True(context.WebSockets.IsWebSocketRequest);
-            var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-
-            var serverBuffer = new byte[1024];
-            var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(serverBuffer), CancellationToken.None);
-            Assert.True(result.EndOfMessage);
-            Assert.Equal(0, result.Count);
-            Assert.Equal(WebSocketMessageType.Close, result.MessageType);
-            Assert.Equal(WebSocketCloseStatus.NormalClosure, result.CloseStatus);
-            Assert.Equal(closeDescription, result.CloseStatusDescription);
-        }))
-        {
-            using (var client = new ClientWebSocket())
+            string closeDescription = "Test Closed";
+            using (var server = KestrelWebSocketHelpers.CreateServer(async context =>
             {
-                await client.ConnectAsync(new Uri(ClientAddress), CancellationToken.None);
-                await client.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, closeDescription, CancellationToken.None);
+                Assert.True(context.WebSockets.IsWebSocketRequest);
+                var webSocket = await context.WebSockets.AcceptWebSocketAsync();
 
-                Assert.Equal(WebSocketState.CloseSent, client.State);
+                await webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, closeDescription, CancellationToken.None);
+            }))
+            {
+                using (var client = new ClientWebSocket())
+                {
+                    await client.ConnectAsync(new Uri(ClientAddress), CancellationToken.None);
+                    var clientBuffer = new byte[1024];
+                    var result = await client.ReceiveAsync(new ArraySegment<byte>(clientBuffer), CancellationToken.None);
+                    Assert.True(result.EndOfMessage);
+                    Assert.Equal(0, result.Count);
+                    Assert.Equal(WebSocketMessageType.Close, result.MessageType);
+                    Assert.Equal(WebSocketCloseStatus.NormalClosure, result.CloseStatus);
+                    Assert.Equal(closeDescription, result.CloseStatusDescription);
+
+                    Assert.Equal(WebSocketState.CloseReceived, client.State);
+                }
             }
         }
-    }
 
-    [ConditionalFact]
-    [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-    [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
-    [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
-    public async Task ReceiveClose_Success()
-    {
-        string closeDescription = "Test Closed";
-        using (var server = KestrelWebSocketHelpers.CreateServer(async context =>
+        [ConditionalFact]
+        [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
+        public async Task CloseFromOpen_Success()
         {
-            Assert.True(context.WebSockets.IsWebSocketRequest);
-            var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-
-            await webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, closeDescription, CancellationToken.None);
-        }))
-        {
-            using (var client = new ClientWebSocket())
+            string closeDescription = "Test Closed";
+            using (var server = KestrelWebSocketHelpers.CreateServer(async context =>
             {
-                await client.ConnectAsync(new Uri(ClientAddress), CancellationToken.None);
-                var clientBuffer = new byte[1024];
-                var result = await client.ReceiveAsync(new ArraySegment<byte>(clientBuffer), CancellationToken.None);
+                Assert.True(context.WebSockets.IsWebSocketRequest);
+                var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+
+                var serverBuffer = new byte[1024];
+                var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(serverBuffer), CancellationToken.None);
                 Assert.True(result.EndOfMessage);
                 Assert.Equal(0, result.Count);
                 Assert.Equal(WebSocketMessageType.Close, result.MessageType);
                 Assert.Equal(WebSocketCloseStatus.NormalClosure, result.CloseStatus);
                 Assert.Equal(closeDescription, result.CloseStatusDescription);
 
-                Assert.Equal(WebSocketState.CloseReceived, client.State);
+                await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+            }))
+            {
+                using (var client = new ClientWebSocket())
+                {
+                    await client.ConnectAsync(new Uri(ClientAddress), CancellationToken.None);
+                    await client.CloseAsync(WebSocketCloseStatus.NormalClosure, closeDescription, CancellationToken.None);
+
+                    Assert.Equal(WebSocketState.Closed, client.State);
+                }
             }
         }
-    }
 
-    [ConditionalFact]
-    [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-    [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
-    [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
-    public async Task CloseFromOpen_Success()
-    {
-        string closeDescription = "Test Closed";
-        using (var server = KestrelWebSocketHelpers.CreateServer(async context =>
+        [ConditionalFact]
+        [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
+        public async Task CloseFromCloseSent_Success()
         {
-            Assert.True(context.WebSockets.IsWebSocketRequest);
-            var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-
-            var serverBuffer = new byte[1024];
-            var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(serverBuffer), CancellationToken.None);
-            Assert.True(result.EndOfMessage);
-            Assert.Equal(0, result.Count);
-            Assert.Equal(WebSocketMessageType.Close, result.MessageType);
-            Assert.Equal(WebSocketCloseStatus.NormalClosure, result.CloseStatus);
-            Assert.Equal(closeDescription, result.CloseStatusDescription);
-
-            await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
-        }))
-        {
-            using (var client = new ClientWebSocket())
+            string closeDescription = "Test Closed";
+            using (var server = KestrelWebSocketHelpers.CreateServer(async context =>
             {
-                await client.ConnectAsync(new Uri(ClientAddress), CancellationToken.None);
-                await client.CloseAsync(WebSocketCloseStatus.NormalClosure, closeDescription, CancellationToken.None);
+                Assert.True(context.WebSockets.IsWebSocketRequest);
+                var webSocket = await context.WebSockets.AcceptWebSocketAsync();
 
-                Assert.Equal(WebSocketState.Closed, client.State);
-            }
-        }
-    }
-
-    [ConditionalFact]
-    [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-    [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
-    [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
-    public async Task CloseFromCloseSent_Success()
-    {
-        string closeDescription = "Test Closed";
-        using (var server = KestrelWebSocketHelpers.CreateServer(async context =>
-        {
-            Assert.True(context.WebSockets.IsWebSocketRequest);
-            var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-
-            var serverBuffer = new byte[1024];
-            var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(serverBuffer), CancellationToken.None);
-            Assert.True(result.EndOfMessage);
-            Assert.Equal(0, result.Count);
-            Assert.Equal(WebSocketMessageType.Close, result.MessageType);
-            Assert.Equal(WebSocketCloseStatus.NormalClosure, result.CloseStatus);
-            Assert.Equal(closeDescription, result.CloseStatusDescription);
-
-            await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
-        }))
-        {
-            using (var client = new ClientWebSocket())
-            {
-                await client.ConnectAsync(new Uri(ClientAddress), CancellationToken.None);
-                await client.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, closeDescription, CancellationToken.None);
-                Assert.Equal(WebSocketState.CloseSent, client.State);
-
-                await client.CloseAsync(WebSocketCloseStatus.NormalClosure, closeDescription, CancellationToken.None);
-                Assert.Equal(WebSocketState.Closed, client.State);
-            }
-        }
-    }
-
-    [ConditionalFact]
-    [OSSkipCondition(OperatingSystems.Linux, SkipReason = "No WebSockets Client for this platform")]
-    [OSSkipCondition(OperatingSystems.MacOSX, SkipReason = "No WebSockets Client for this platform")]
-    [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
-    public async Task CloseFromCloseReceived_Success()
-    {
-        string closeDescription = "Test Closed";
-        using (var server = KestrelWebSocketHelpers.CreateServer(async context =>
-        {
-            Assert.True(context.WebSockets.IsWebSocketRequest);
-            var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-
-            await webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, closeDescription, CancellationToken.None);
-
-            var serverBuffer = new byte[1024];
-            var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(serverBuffer), CancellationToken.None);
-            Assert.True(result.EndOfMessage);
-            Assert.Equal(0, result.Count);
-            Assert.Equal(WebSocketMessageType.Close, result.MessageType);
-            Assert.Equal(WebSocketCloseStatus.NormalClosure, result.CloseStatus);
-            Assert.Equal(closeDescription, result.CloseStatusDescription);
-        }))
-        {
-            using (var client = new ClientWebSocket())
-            {
-                await client.ConnectAsync(new Uri(ClientAddress), CancellationToken.None);
-                var clientBuffer = new byte[1024];
-                var result = await client.ReceiveAsync(new ArraySegment<byte>(clientBuffer), CancellationToken.None);
+                var serverBuffer = new byte[1024];
+                var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(serverBuffer), CancellationToken.None);
                 Assert.True(result.EndOfMessage);
                 Assert.Equal(0, result.Count);
                 Assert.Equal(WebSocketMessageType.Close, result.MessageType);
                 Assert.Equal(WebSocketCloseStatus.NormalClosure, result.CloseStatus);
                 Assert.Equal(closeDescription, result.CloseStatusDescription);
 
-                Assert.Equal(WebSocketState.CloseReceived, client.State);
+                await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+            }))
+            {
+                using (var client = new ClientWebSocket())
+                {
+                    await client.ConnectAsync(new Uri(ClientAddress), CancellationToken.None);
+                    await client.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, closeDescription, CancellationToken.None);
+                    Assert.Equal(WebSocketState.CloseSent, client.State);
 
-                await client.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+                    await client.CloseAsync(WebSocketCloseStatus.NormalClosure, closeDescription, CancellationToken.None);
+                    Assert.Equal(WebSocketState.Closed, client.State);
+                }
+            }
+        }
 
-                Assert.Equal(WebSocketState.Closed, client.State);
+        [ConditionalFact]
+        [OSSkipCondition(OperatingSystems.Windows, WindowsVersions.Win7, SkipReason = "No WebSockets Client for this platform")]
+        public async Task CloseFromCloseReceived_Success()
+        {
+            string closeDescription = "Test Closed";
+            using (var server = KestrelWebSocketHelpers.CreateServer(async context =>
+            {
+                Assert.True(context.WebSockets.IsWebSocketRequest);
+                var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+
+                await webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, closeDescription, CancellationToken.None);
+
+                var serverBuffer = new byte[1024];
+                var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(serverBuffer), CancellationToken.None);
+                Assert.True(result.EndOfMessage);
+                Assert.Equal(0, result.Count);
+                Assert.Equal(WebSocketMessageType.Close, result.MessageType);
+                Assert.Equal(WebSocketCloseStatus.NormalClosure, result.CloseStatus);
+                Assert.Equal(closeDescription, result.CloseStatusDescription);
+            }))
+            {
+                using (var client = new ClientWebSocket())
+                {
+                    await client.ConnectAsync(new Uri(ClientAddress), CancellationToken.None);
+                    var clientBuffer = new byte[1024];
+                    var result = await client.ReceiveAsync(new ArraySegment<byte>(clientBuffer), CancellationToken.None);
+                    Assert.True(result.EndOfMessage);
+                    Assert.Equal(0, result.Count);
+                    Assert.Equal(WebSocketMessageType.Close, result.MessageType);
+                    Assert.Equal(WebSocketCloseStatus.NormalClosure, result.CloseStatus);
+                    Assert.Equal(closeDescription, result.CloseStatusDescription);
+
+                    Assert.Equal(WebSocketState.CloseReceived, client.State);
+
+                    await client.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+
+                    Assert.Equal(WebSocketState.Closed, client.State);
+                }
             }
         }
     }
-}
 }
