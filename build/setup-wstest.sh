@@ -26,3 +26,5 @@ python ./.python/virtualenv-15.1.0/virtualenv.py .virtualenv
 .virtualenv/bin/pip install autobahntestsuite
 
 # We're done. The travis config has already established the path to WSTest should be within the virtualenv.
+ls -l .virtualenv/bin
+.virtualenv/bin/wstest --version
