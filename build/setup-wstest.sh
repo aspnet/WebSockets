@@ -2,7 +2,7 @@
 
 if [ "$TRAVIS_OS_NAME" == "osx" ]; then
     # Install python
-    brew update
+    brew update > /dev/null
     brew install python
 fi
 
@@ -17,7 +17,7 @@ tar xf virtualenv-15.1.0.tar.gz
 cd ..
 
 # Make a virtualenv
-$VIRTUALENV .virtualenv
+python ./.python/virtualenv-15.1.0/virtualenv.py .virtualenv
 
 .virtualenv/bin/python --version
 .virtualenv/bin/pip --version
