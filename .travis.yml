@@ -8,7 +8,7 @@ env:
     - AUTOBAHN_SUITES_LOG: 1
 mono: none
 python:
-  - "2.7"
+  - pypy
 os:
   - linux
   - osx
