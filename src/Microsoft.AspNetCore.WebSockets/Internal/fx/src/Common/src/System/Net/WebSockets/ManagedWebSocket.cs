@@ -278,7 +278,7 @@ namespace System.Net.WebSockets
 
             try
             {
-               WebSocketValidate.ThrowIfInvalidState(_state, _disposed, s_validSendStates);
+                WebSocketValidate.ThrowIfInvalidState(_state, _disposed, s_validSendStates);
                 ThrowIfOperationInProgress(_lastSendAsync);
             }
             catch (Exception exc)
@@ -519,7 +519,16 @@ namespace System.Net.WebSockets
             {
                 // This exists purely to keep the connection alive; don't wait for the result, and ignore any failures.
                 // The call will handle releasing the lock.
-                SendFrameLockAcquiredNonCancelableAsync(MessageOpcode.Ping, true, new ArraySegment<byte>(CompatHelpers.Empty<byte>()));
+                var task = SendFrameLockAcquiredNonCancelableAsync(MessageOpcode.Ping, true, new ArraySegment<byte>(CompatHelpers.Empty<byte>()));
+
+                // "Observe" any exception, ignoring it to prevent the unobserved exception event from being raised.
+                if (task.Status != TaskStatus.RanToCompletion)
+                {
+                    task.ContinueWith(p => { Exception ignored = p.Exception; },
+                        CancellationToken.None,
+                        TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.ExecuteSynchronously,
+                        TaskScheduler.Default);
+                }
             }
             else
             {
