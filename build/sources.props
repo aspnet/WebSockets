@@ -12,5 +12,11 @@
       $(RestoreSources);
       https://api.nuget.org/v3/index.json;
     </RestoreSources>
+
+    <!-- Temporary -->
+    <RestoreSources>
+      $(RestoreSources);
+      https://dotnet.myget.org/F/dotnet-core/api/v3/index.json;
+    </RestoreSources>
   </PropertyGroup>
 </Project>
