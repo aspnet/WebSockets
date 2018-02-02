@@ -12,8 +12,8 @@ branches:
     - /release\/.*/
     - dev
     - /^(.*\/)?ci-.*$/
-# install:
-#   - ps: .\build\setup-wstest.ps1
+install:
+  - ps: .\build\setup-wstest.ps1
 build_script:
   - ps: .\run.ps1 default-build
 clone_depth: 1
