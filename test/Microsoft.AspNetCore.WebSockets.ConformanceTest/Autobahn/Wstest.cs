@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.IO;
 
 namespace Microsoft.AspNetCore.WebSockets.ConformanceTest.Autobahn
 {
@@ -20,7 +21,8 @@ namespace Microsoft.AspNetCore.WebSockets.ConformanceTest.Autobahn
             {
                 location = Locate("wstest");
             }
-            return location == null ? null : new Wstest(location);
+
+            return (location == null && File.Exists(location)) ? null : new Wstest(location);
         }
     }
 }
