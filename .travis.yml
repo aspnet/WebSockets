@@ -24,7 +24,7 @@ branches:
     - /release\/.*/
     - dev
     - /^(.*\/)?ci-.*$/
-install:
-  - ./build/setup-wstest.sh
+# install:
+#   - ./build/setup-wstest.sh
 script:
   - ./build.sh
