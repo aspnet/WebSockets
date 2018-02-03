@@ -16,14 +16,16 @@ python --version
 pip install virtualenv
 
 # Make a virtualenv in .virtualenv
-virtualenv .virtualenv
+$VirtualEnvDir = Join-Path (Get-Location) ".virtualenv";
 
-.virtualenv/bin/python --version
-.virtualenv/bin/pip --version
+virtualenv $VirtualEnvDir
+
+& "$VirtualEnvDir\bin\python" --version
+& "$VirtualEnvDir\bin\pip" --version
 
 # Install autobahn into the virtualenv
-.virtualenv/bin/pip install autobahntestsuite
+& "$VirtualEnvDir\bin\pip" install autobahntestsuite
 
 # We're done. The travis config has already established the path to WSTest should be within the virtualenv.
-Get-ChildItem .virtualenv/bin
-.virtualenv/bin/wstest --version
+Get-ChildItem .$VirtualEnvDir/bin
+& "$VirtualEnvDir\bin\wstest" --version
