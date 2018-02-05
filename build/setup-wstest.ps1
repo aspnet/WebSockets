@@ -7,7 +7,7 @@ if(!(Test-Path $VendorDir)) {
     mkdir $VendorDir
 }
 
-$VirtualEnvDir = Join-Path (Get-Location) "virtualenv";
+$VirtualEnvDir = Join-Path $VendorDir "virtualenv";
 $ScriptsDir = Join-Path $VirtualEnvDir "Scripts"
 $WsTest = Join-Path $ScriptsDir "wstest.exe"
 
