@@ -9,9 +9,6 @@ if(!(has python)) {
     throw "Failed to install python2"
 }
 
-# Print python version
-python --version
-
 # Install virtualenv
 pip install virtualenv
 
@@ -20,12 +17,12 @@ $VirtualEnvDir = Join-Path (Get-Location) ".virtualenv";
 
 virtualenv $VirtualEnvDir
 
-& "$VirtualEnvDir\bin\python" --version
-& "$VirtualEnvDir\bin\pip" --version
+& "$VirtualEnvDir\Scripts\python" --version
+& "$VirtualEnvDir\Scripts\pip" --version
 
 # Install autobahn into the virtualenv
-& "$VirtualEnvDir\bin\pip" install autobahntestsuite
+& "$VirtualEnvDir\Scripts\pip" install autobahntestsuite
 
 # We're done. The travis config has already established the path to WSTest should be within the virtualenv.
 Get-ChildItem .$VirtualEnvDir/bin
-& "$VirtualEnvDir\bin\wstest" --version
+& "$VirtualEnvDir\Scripts\wstest" --version
