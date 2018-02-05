@@ -31,7 +31,7 @@ namespace Microsoft.AspNetCore.WebSockets.ConformanceTest
             // If we're on CI, we want to actually fail if WsTest isn't installed, rather than just skipping the test
             // The SkipIfWsTestNotPresent attribute ensures that this test isn't skipped on CI, so we just need to check that Wstest is present
             // And we use Assert.True to provide an error message
-            Assert.True(Wstest.Default != null, "The 'wstest' executable (Autobahn WebSockets Test Suite) could not be found on the PATH. Run the Build Agent setup scripts to install it or see https://github.com/crossbario/autobahn-testsuite for instructions on manual installation.");
+            Assert.True(Wstest.Default != null, $"The 'wstest' executable (Autobahn WebSockets Test Suite) could not be found at '{Wstest.DefaultLocation}'. Run the Build Agent setup scripts to install it or see https://github.com/crossbario/autobahn-testsuite for instructions on manual installation.");
 
             using (StartLog(out var loggerFactory))
             {

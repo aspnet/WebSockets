@@ -49,5 +49,4 @@ virtualenv $VirtualEnvDir
 # Install autobahn into the virtualenv
 & "$ScriptsDir\pip" install autobahntestsuite
 
-$Ver = & "$WsTest" --version
-Write-Host "Using wstest $Ver"
+Write-Host "Using wstest from: '$WsTest'"
