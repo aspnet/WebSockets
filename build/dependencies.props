@@ -10,8 +10,8 @@
     <MicrosoftAspNetCoreServerHttpSysPackageVersion>2.1.0-preview2-30478</MicrosoftAspNetCoreServerHttpSysPackageVersion>
     <MicrosoftAspNetCoreServerIISIntegrationPackageVersion>2.1.0-preview2-30478</MicrosoftAspNetCoreServerIISIntegrationPackageVersion>
     <MicrosoftAspNetCoreServerIntegrationTestingPackageVersion>0.5.0-preview2-30478</MicrosoftAspNetCoreServerIntegrationTestingPackageVersion>
-    <MicrosoftAspNetCoreServerKestrelHttpsPackageVersion>2.1.0-a-preview2-mpr-17639</MicrosoftAspNetCoreServerKestrelHttpsPackageVersion>
-    <MicrosoftAspNetCoreServerKestrelPackageVersion>2.1.0-a-preview2-mpr-17639</MicrosoftAspNetCoreServerKestrelPackageVersion>
+    <MicrosoftAspNetCoreServerKestrelHttpsPackageVersion>2.1.0-a-preview2-mpr-17640</MicrosoftAspNetCoreServerKestrelHttpsPackageVersion>
+    <MicrosoftAspNetCoreServerKestrelPackageVersion>2.1.0-a-preview2-mpr-17640</MicrosoftAspNetCoreServerKestrelPackageVersion>
     <MicrosoftAspNetCoreStaticFilesPackageVersion>2.1.0-preview2-30478</MicrosoftAspNetCoreStaticFilesPackageVersion>
     <MicrosoftAspNetCoreTestingPackageVersion>2.1.0-preview2-30478</MicrosoftAspNetCoreTestingPackageVersion>
     <MicrosoftExtensionsConfigurationCommandLinePackageVersion>2.1.0-preview2-30478</MicrosoftExtensionsConfigurationCommandLinePackageVersion>
