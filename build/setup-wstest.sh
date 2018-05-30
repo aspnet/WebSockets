@@ -13,9 +13,6 @@ cd ..
 # Make a virtualenv
 python ./.python/virtualenv-15.1.0/virtualenv.py .virtualenv
 
-# Check TLS version
-.virtualenv/bin/python -c "import urllib2,json; print(json.loads(urllib2.urlopen('https://www.howsmyssl.com/a/check').read())['tls_version'])"
-
 .virtualenv/bin/python --version
 .virtualenv/bin/pip --version
 
