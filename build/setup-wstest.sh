@@ -13,6 +13,9 @@ cd ..
 # Make a virtualenv
 python ./.python/virtualenv-15.1.0/virtualenv.py .virtualenv
 
+# Check TLS version
+.virtualenv/bin/python -c "import urllib2,json; print(json.loads(urllib2.urlopen('https://www.howsmyssl.com/a/check').read())['tls_version'])"
+
 # We have to update pip on macOS to ensure we have one that supports TLS > 1.2.
 # We do the update INSIDE the virtualenv (for permission reasons).
 if [ "$TRAVIS_OS_NAME" == "osx" ]; then
