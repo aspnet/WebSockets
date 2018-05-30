@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-    # Install python
-    brew update > /dev/null
-    brew install python
+if ! type -p python > /dev/null; then
+    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+        # Install python
+        brew update > /dev/null
+        brew install python
+    fi
 fi
 
 type -p python
