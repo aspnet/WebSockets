@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
-if ! type -p python > /dev/null; then
-    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-        # Install python
-        brew update > /dev/null
-        brew install python
-    fi
+# We have to update python on macOS to ensure we have one that supports TLS > 1.2
+if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+    # Install python
+    brew update > /dev/null
+    brew install python
 fi
 
 type -p python
