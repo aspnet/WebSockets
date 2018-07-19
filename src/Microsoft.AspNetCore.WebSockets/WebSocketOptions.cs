@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -14,6 +15,7 @@ namespace Microsoft.AspNetCore.Builder
         {
             KeepAliveInterval = TimeSpan.FromMinutes(2);
             ReceiveBufferSize = 4 * 1024;
+            AllowedOrigins = new List<string>();
         }
 
         /// <summary>
@@ -27,5 +29,10 @@ namespace Microsoft.AspNetCore.Builder
         /// The default is 4kb.
         /// </summary>
         public int ReceiveBufferSize { get; set; }
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        public IList<string> AllowedOrigins { get; set; }
     }
 }

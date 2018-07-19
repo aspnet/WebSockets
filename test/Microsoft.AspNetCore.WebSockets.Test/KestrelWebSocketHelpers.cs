@@ -14,7 +14,7 @@ namespace Microsoft.AspNetCore.WebSockets.Test
 {
     public class KestrelWebSocketHelpers
     {
-        public static IDisposable CreateServer(ILoggerFactory loggerFactory, Func<HttpContext, Task> app)
+        public static IDisposable CreateServer(ILoggerFactory loggerFactory, Func<HttpContext, Task> app, WebSocketOptions options = null)
         {
             Action<IApplicationBuilder> startup = builder =>
             {
@@ -38,7 +38,14 @@ namespace Microsoft.AspNetCore.WebSockets.Test
                         await ct.Response.WriteAsync(ex.ToString());
                     }
                 });
-                builder.UseWebSockets();
+                if (options == null)
+                {
+                    builder.UseWebSockets();
+                }
+                else
+                {
+                    builder.UseWebSockets(options);
+                }
                 builder.Run(c => app(c));
             };
 

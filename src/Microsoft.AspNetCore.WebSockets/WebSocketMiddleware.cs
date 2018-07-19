@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +12,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.WebSockets.Internal;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
+using Microsoft.Net.Http.Headers;
 
 namespace Microsoft.AspNetCore.WebSockets
 {
@@ -42,7 +45,24 @@ namespace Microsoft.AspNetCore.WebSockets
             var upgradeFeature = context.Features.Get<IHttpUpgradeFeature>();
             if (upgradeFeature != null && context.Features.Get<IHttpWebSocketFeature>() == null)
             {
-                context.Features.Set<IHttpWebSocketFeature>(new UpgradeHandshake(context, upgradeFeature, _options));
+                var webSocketFeature = new UpgradeHandshake(context, upgradeFeature, _options);
+                context.Features.Set<IHttpWebSocketFeature>(webSocketFeature);
+
+                if (_options.AllowedOrigins.Count > 0)
+                {
+                    // Check for Origin header
+                    var originHeader = context.Request.Headers[HeaderNames.Origin];
+
+                    if (!StringValues.IsNullOrEmpty(originHeader) && webSocketFeature.IsWebSocketRequest)
+                    {
+                        // Check allowed origins to see if request is allowed
+                        if (!_options.AllowedOrigins.Contains(originHeader.ToString(), StringComparer.Ordinal) && !_options.AllowedOrigins.Contains("*", StringComparer.Ordinal))
+                        {
+                            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                            return Task.CompletedTask;
+                        }
+                    }
+                }
             }
 
             return _next(context);
@@ -53,6 +73,7 @@ namespace Microsoft.AspNetCore.WebSockets
             private readonly HttpContext _context;
             private readonly IHttpUpgradeFeature _upgradeFeature;
             private readonly WebSocketOptions _options;
+            private bool? _isWebSocketRequest;
 
             public UpgradeHandshake(HttpContext context, IHttpUpgradeFeature upgradeFeature, WebSocketOptions options)
             {
@@ -65,19 +86,26 @@ namespace Microsoft.AspNetCore.WebSockets
             {
                 get
                 {
-                    if (!_upgradeFeature.IsUpgradableRequest)
+                    if (_isWebSocketRequest == null)
                     {
-                        return false;
-                    }
-                    var headers = new List<KeyValuePair<string, string>>();
-                    foreach (string headerName in HandshakeHelpers.NeededHeaders)
-                    {
-                        foreach (var value in _context.Request.Headers.GetCommaSeparatedValues(headerName))
+                        if (!_upgradeFeature.IsUpgradableRequest)
                         {
-                            headers.Add(new KeyValuePair<string, string>(headerName, value));
+                            _isWebSocketRequest = false;
+                        }
+                        else
+                        {
+                            var headers = new List<KeyValuePair<string, string>>();
+                            foreach (string headerName in HandshakeHelpers.NeededHeaders)
+                            {
+                                foreach (var value in _context.Request.Headers.GetCommaSeparatedValues(headerName))
+                                {
+                                    headers.Add(new KeyValuePair<string, string>(headerName, value));
+                                }
+                            }
+                            _isWebSocketRequest = HandshakeHelpers.CheckSupportedWebSocketRequest(_context.Request.Method, headers);
                         }
                     }
-                    return HandshakeHelpers.CheckSupportedWebSocketRequest(_context.Request.Method, headers);
+                    return _isWebSocketRequest.Value;
                 }
             }
 
