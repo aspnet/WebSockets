@@ -23,7 +23,7 @@ namespace Microsoft.AspNetCore.WebSockets
     {
         private readonly RequestDelegate _next;
         private readonly WebSocketOptions _options;
-        private readonly ILogger<WebSocketMiddleware> _logger;
+        private readonly ILogger _logger;
 
         [Obsolete("This constructor has been replaced with an equivalent constructor which requires an ILoggerFactory.")]
         public WebSocketMiddleware(RequestDelegate next, IOptions<WebSocketOptions> options)
