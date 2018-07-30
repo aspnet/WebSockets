@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.WebSockets.Internal;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
@@ -21,8 +23,15 @@ namespace Microsoft.AspNetCore.WebSockets
     {
         private readonly RequestDelegate _next;
         private readonly WebSocketOptions _options;
+        private readonly ILogger<WebSocketMiddleware> _logger;
 
+        [Obsolete("This constructor has been replaced with an equivalent constructor which requires an ILoggerFactory.")]
         public WebSocketMiddleware(RequestDelegate next, IOptions<WebSocketOptions> options)
+            : this(next, options, NullLoggerFactory.Instance)
+        {
+        }
+
+        public WebSocketMiddleware(RequestDelegate next, IOptions<WebSocketOptions> options, ILoggerFactory loggerFactory)
         {
             if (next == null)
             {
@@ -35,6 +44,9 @@ namespace Microsoft.AspNetCore.WebSockets
 
             _next = next;
             _options = options.Value;
+            _options.AllowedOrigins = _options.AllowedOrigins.Select(o => o.ToLowerInvariant()).ToList();
+
+            _logger = loggerFactory.CreateLogger<WebSocketMiddleware>();
 
             // TODO: validate options.
         }
@@ -58,6 +70,7 @@ namespace Microsoft.AspNetCore.WebSockets
                         // Check allowed origins to see if request is allowed
                         if (!_options.AllowedOrigins.Contains(originHeader.ToString(), StringComparer.Ordinal) && !_options.AllowedOrigins.Contains("*", StringComparer.Ordinal))
                         {
+                            _logger.LogInformation("Request origin {Origin} does not have permission to access the resource.", originHeader);
                             context.Response.StatusCode = StatusCodes.Status403Forbidden;
                             return Task.CompletedTask;
                         }

@@ -570,11 +570,11 @@ namespace Microsoft.AspNetCore.WebSockets.Test
         [InlineData(HttpStatusCode.OK, "http://e.com", "http://example.com")]
         [InlineData(HttpStatusCode.OK, "*")]
         [InlineData(HttpStatusCode.OK, "http://e.com", "*")]
-        public async Task CorsIsAppliedToWebSocketRequests(HttpStatusCode expectedCode, params string[] origins)
+        [InlineData(HttpStatusCode.OK, "http://ExAmPLE.cOm")]
+        public async Task OriginIsValidatedForWebSocketRequests(HttpStatusCode expectedCode, params string[] origins)
         {
             using (StartLog(out var loggerFactory))
             {
-                //string closeDescription = "Test Closed";
                 var options = new WebSocketOptions();
                 if (origins != null)
                 {
@@ -602,12 +602,44 @@ namespace Microsoft.AspNetCore.WebSockets.Test
                             request.Headers.Connection.Add("Upgrade");
                             request.Headers.Upgrade.Add(new System.Net.Http.Headers.ProductHeaderValue("websocket"));
                             request.Headers.Add(Constants.Headers.SecWebSocketVersion, Constants.Headers.SupportedVersion);
+                            // SecWebSocketKey required to be 16 bytes
                             request.Headers.Add(Constants.Headers.SecWebSocketKey, Convert.ToBase64String(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 }, Base64FormattingOptions.None));
 
                             request.Headers.Add("Origin", "http://example.com");
 
                             var response = await client.SendAsync(request);
                             Assert.Equal(expectedCode, response.StatusCode);
+                        }
+                    }
+                }
+            }
+        }
+
+        [Fact]
+        public async Task OriginIsNotValidatedForNonWebSocketRequests()
+        {
+            using (StartLog(out var loggerFactory))
+            {
+                var options = new WebSocketOptions();
+                options.AllowedOrigins.Add("http://example.com");
+
+                using (var server = KestrelWebSocketHelpers.CreateServer(loggerFactory, context =>
+                {
+                    Assert.False(context.WebSockets.IsWebSocketRequest);
+                    return Task.CompletedTask;
+                }, options))
+                {
+                    using (var client = new HttpClient())
+                    {
+                        var uri = new UriBuilder(ClientAddress);
+                        uri.Scheme = "http";
+
+                        using (var request = new HttpRequestMessage(HttpMethod.Get, uri.ToString()))
+                        {
+                            request.Headers.Add("Origin", "http://notexample.com");
+
+                            var response = await client.SendAsync(request);
+                            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                         }
                     }
                 }
