@@ -34,6 +34,6 @@ namespace Microsoft.AspNetCore.Builder
         /// Set the Origin header values allowed for WebSocket requests to prevent Cross-Site WebSocket Hijacking.
         /// By default all Origins are allowed.
         /// </summary>
-        public IList<string> AllowedOrigins { get; set; }
+        public IList<string> AllowedOrigins { get; internal set; }
     }
 }

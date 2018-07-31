@@ -24,12 +24,7 @@ namespace Microsoft.AspNetCore.WebSockets
         private readonly RequestDelegate _next;
         private readonly WebSocketOptions _options;
         private readonly ILogger _logger;
-
-        [Obsolete("This constructor has been replaced with an equivalent constructor which requires an ILoggerFactory.")]
-        public WebSocketMiddleware(RequestDelegate next, IOptions<WebSocketOptions> options)
-            : this(next, options, NullLoggerFactory.Instance)
-        {
-        }
+        private readonly bool _anyOriginAllowed;
 
         public WebSocketMiddleware(RequestDelegate next, IOptions<WebSocketOptions> options, ILoggerFactory loggerFactory)
         {
@@ -45,10 +40,17 @@ namespace Microsoft.AspNetCore.WebSockets
             _next = next;
             _options = options.Value;
             _options.AllowedOrigins = _options.AllowedOrigins.Select(o => o.ToLowerInvariant()).ToList();
+            _anyOriginAllowed = _options.AllowedOrigins.Count == 0 || _options.AllowedOrigins.Contains("*", StringComparer.Ordinal);
 
             _logger = loggerFactory.CreateLogger<WebSocketMiddleware>();
 
             // TODO: validate options.
+        }
+
+        [Obsolete("This constructor has been replaced with an equivalent constructor which requires an ILoggerFactory.")]
+        public WebSocketMiddleware(RequestDelegate next, IOptions<WebSocketOptions> options)
+            : this(next, options, NullLoggerFactory.Instance)
+        {
         }
 
         public Task Invoke(HttpContext context)
@@ -60,7 +62,7 @@ namespace Microsoft.AspNetCore.WebSockets
                 var webSocketFeature = new UpgradeHandshake(context, upgradeFeature, _options);
                 context.Features.Set<IHttpWebSocketFeature>(webSocketFeature);
 
-                if (_options.AllowedOrigins.Count > 0)
+                if (!_anyOriginAllowed)
                 {
                     // Check for Origin header
                     var originHeader = context.Request.Headers[HeaderNames.Origin];
@@ -68,9 +70,9 @@ namespace Microsoft.AspNetCore.WebSockets
                     if (!StringValues.IsNullOrEmpty(originHeader) && webSocketFeature.IsWebSocketRequest)
                     {
                         // Check allowed origins to see if request is allowed
-                        if (!_options.AllowedOrigins.Contains(originHeader.ToString(), StringComparer.Ordinal) && !_options.AllowedOrigins.Contains("*", StringComparer.Ordinal))
+                        if (!_options.AllowedOrigins.Contains(originHeader.ToString(), StringComparer.Ordinal))
                         {
-                            _logger.LogInformation("Request origin {Origin} does not have permission to access the resource.", originHeader);
+                            _logger.LogDebug("Request origin {Origin} is not in the list of allowed origins.", originHeader);
                             context.Response.StatusCode = StatusCodes.Status403Forbidden;
                             return Task.CompletedTask;
                         }
