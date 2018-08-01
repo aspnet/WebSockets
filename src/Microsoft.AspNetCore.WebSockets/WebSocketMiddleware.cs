@@ -25,6 +25,7 @@ namespace Microsoft.AspNetCore.WebSockets
         private readonly WebSocketOptions _options;
         private readonly ILogger _logger;
         private readonly bool _anyOriginAllowed;
+        private readonly List<string> _allowedOrigins;
 
         public WebSocketMiddleware(RequestDelegate next, IOptions<WebSocketOptions> options, ILoggerFactory loggerFactory)
         {
@@ -39,7 +40,7 @@ namespace Microsoft.AspNetCore.WebSockets
 
             _next = next;
             _options = options.Value;
-            _options.AllowedOrigins = _options.AllowedOrigins.Select(o => o.ToLowerInvariant()).ToList();
+            _allowedOrigins = _options.AllowedOrigins.Select(o => o.ToLowerInvariant()).ToList();
             _anyOriginAllowed = _options.AllowedOrigins.Count == 0 || _options.AllowedOrigins.Contains("*", StringComparer.Ordinal);
 
             _logger = loggerFactory.CreateLogger<WebSocketMiddleware>();
@@ -70,7 +71,7 @@ namespace Microsoft.AspNetCore.WebSockets
                     if (!StringValues.IsNullOrEmpty(originHeader) && webSocketFeature.IsWebSocketRequest)
                     {
                         // Check allowed origins to see if request is allowed
-                        if (!_options.AllowedOrigins.Contains(originHeader.ToString(), StringComparer.Ordinal))
+                        if (!_allowedOrigins.Contains(originHeader.ToString(), StringComparer.Ordinal))
                         {
                             _logger.LogDebug("Request origin {Origin} is not in the list of allowed origins.", originHeader);
                             context.Response.StatusCode = StatusCodes.Status403Forbidden;
