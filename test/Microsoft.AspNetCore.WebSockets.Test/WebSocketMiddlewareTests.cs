@@ -575,20 +575,20 @@ namespace Microsoft.AspNetCore.WebSockets.Test
         {
             using (StartLog(out var loggerFactory))
             {
-                var options = new WebSocketOptions();
-                if (origins != null)
-                {
-                    foreach (var origin in origins)
-                    {
-                        options.AllowedOrigins.Add(origin);
-                    }
-                }
-
                 using (var server = KestrelWebSocketHelpers.CreateServer(loggerFactory, context =>
                 {
                     Assert.True(context.WebSockets.IsWebSocketRequest);
                     return Task.CompletedTask;
-                }, options))
+                }, o =>
+                {
+                    if (origins != null)
+                    {
+                        foreach (var origin in origins)
+                        {
+                            o.AllowedOrigins.Add(origin);
+                        }
+                    }
+                }))
                 {
                     using (var client = new HttpClient())
                     {
@@ -627,7 +627,7 @@ namespace Microsoft.AspNetCore.WebSockets.Test
                 {
                     Assert.False(context.WebSockets.IsWebSocketRequest);
                     return Task.CompletedTask;
-                }, options))
+                }, o => o.AllowedOrigins.Add("http://example.com")))
                 {
                     using (var client = new HttpClient())
                     {
