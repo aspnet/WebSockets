@@ -620,9 +620,6 @@ namespace Microsoft.AspNetCore.WebSockets.Test
         {
             using (StartLog(out var loggerFactory))
             {
-                var options = new WebSocketOptions();
-                options.AllowedOrigins.Add("http://example.com");
-
                 using (var server = KestrelWebSocketHelpers.CreateServer(loggerFactory, context =>
                 {
                     Assert.False(context.WebSockets.IsWebSocketRequest);
