@@ -19,6 +19,7 @@ namespace Microsoft.AspNetCore.WebSockets.ConformanceTest
         // We will enable Wstest on every build once we've gotten the necessary infrastructure sorted out :).
         [ConditionalFact]
         [SkipIfWsTestNotPresent]
+        [SkipIfEnvironmentVariableNotEnabled("ASPNETCORE_RUN_AUTOBAHN_TESTS")]
         public async Task AutobahnTestSuite()
         {
             var reportDir = Environment.GetEnvironmentVariable("AUTOBAHN_SUITES_REPORT_DIR");
